@@ -66,6 +66,7 @@
   color: gold;
   font-family: "Gideon Roman";
   font-size: large;
+  cursor: pointer;
 }
 
 p, h1 {
