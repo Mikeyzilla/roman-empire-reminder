@@ -2,18 +2,74 @@
 
 .container {
   background-color: gray;
+  display: grid;
 }
 
 .WelcomeToolBar {
-  background-color: gold;
+  background-color: rgb(241, 253, 16);
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: 3fr 1fr;
+}
+
+.RomanWelcoming, .ProfilePictureImage, .SettingsImage {
+  justify-self: center;
+  align-self: center;
+}
+
+.ToolBar-Icons {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.ProfilePictureImage {
+  border-radius: 30px;
 }
 
 .ProfilePictureImage, .SettingsImage {
+  height: 55px;
+  cursor: pointer;
+  width: 55px;
+}
+
+.WelcomingBody {
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: 1fr;
+  justify-items: center;
+}
+
+.RomanOpener {
+  font-weight: bold;
+  height: 60px;
+  font-size: 24px;
+}
+
+.ForgetfulRoman {
+  width: 500px;
+  height: 350px;
+}
+
+.WelcomeFooter {
+  display: flex;
+  justify-content: center;
+}
+
+.HistoricJourneyButton {
+  background-image: url("../images/RomanButtonBackground.jpg");
+  width: 200px;
   height: 50px;
-  width: 50px;
+  border-radius: 30px;
+  background-size: 250px 50px;
+  background-repeat: no-repeat;
+  color: gold;
+  font-family: "Gideon Roman";
+  font-size: large;
 }
 
-
-p {
+p, h1 {
   font-family: "Gideon Roman", serif;
+  font-weight: bold;
 }
+
