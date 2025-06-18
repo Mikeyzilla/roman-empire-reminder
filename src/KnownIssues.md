@@ -8,4 +8,5 @@ C) The button's text is slightly hard to read.
 
 D) There is no on click redirection for the button yet. 
 
-E) The index file is html, not PHP yet. 
+E) The index file (and all other web page files) are in html, not PHP yet. 
+Because of this, we have unnecessary style files and functionality files. PHP should combine all three (HTML, CSS, and backend code) into one file when fixed.
