@@ -9,7 +9,11 @@
   background-color: rgb(241, 253, 16);
   display: grid;
   grid-template-rows: 1fr;
-  grid-template-columns: 3fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.RomanWelcoming {
+  grid-column: 2;
 }
 
 .RomanWelcoming, .ProfilePictureImage, .SettingsImage {
