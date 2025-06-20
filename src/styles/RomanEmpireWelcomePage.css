@@ -1,8 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Gideon+Roman&display=swap');
 
+
+* {
+  margin: 0; /* This fixes the whitespace around .container */
+  padding: 0;
+}
+
 .container {
   background-color: gray;
-  display: grid;
+  /* display: grid; */ /* Doesn't make sense to use grid if layout is one-dimensional, flex is better for that */
+  height: 100vh; /* This extends .container from top to bottom */
 }
 
 .WelcomeToolBar {
@@ -10,6 +17,8 @@
   display: grid;
   grid-template-rows: 1fr;
   grid-template-columns: 1fr 1fr 1fr;
+
+  height: 10vh;
 }
 
 .RomanWelcoming {
@@ -38,10 +47,17 @@
 }
 
 .WelcomingBody {
-  display: grid;
-  grid-template-rows: 1fr;
-  grid-template-columns: 1fr;
-  justify-items: center;
+  display: flex; /* Doesn't make sense to use grid when layout is one-dimensional */
+  flex-direction: column;
+  
+  * {
+    margin-top: 20px;
+  }
+  .me-when-i-froget {
+    font-size: 1.5rem;
+    text-align: center;
+  }
+
 }
 
 .RomanOpener {

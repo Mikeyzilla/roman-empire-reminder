@@ -8,6 +8,7 @@ async function greet() {
   greetMsgEl.textContent = await invoke("greet", { name: greetInputEl.value });
 }
 
+/* Commenting out to remove error message
 window.addEventListener("DOMContentLoaded", () => {
   greetInputEl = document.querySelector("#greet-input");
   greetMsgEl = document.querySelector("#greet-msg");
@@ -15,4 +16,4 @@ window.addEventListener("DOMContentLoaded", () => {
     e.preventDefault();
     greet();
   });
-});
+}); */
