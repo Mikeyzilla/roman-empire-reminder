@@ -14,9 +14,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   leftSoldier.addEventListener("mouseenter", () => {
     if (pointInConversation === 0) {
+      bubbletext1.style.backgroundImage = "url('../images/thoughtBubble.jpg')";
       bubbletext1.textContent = "I sure wish I could remember the Roman Empire...";
       pointInConversation = 1;
     } else if (pointInConversation === 2) {
+      bubbletext1.style.backgroundImage = "url('../images/thoughtBubble.jpg')";
       bubbletext1.textContent = "Oh yeah? Well what are we waiting for? Let's sign up!";
       pointInConversation = 3;
     }
@@ -28,6 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   rightSoldier.addEventListener("mouseenter", () => {
     if (pointInConversation === 1) {
+      bubbletext2.style.backgroundImage = "url('../images/thoughtBubble.jpg')";
       bubbletext2.textContent = "Didn't you hear? Mike and Marcel designed an incredible app to help us remember!";
       pointInConversation = 2;
     }

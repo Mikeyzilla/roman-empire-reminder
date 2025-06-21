@@ -13,11 +13,30 @@
   background-size: cover;
 }
 
-.textbubblelocation1 {
+.cursormarker1 {
   cursor: pointer;
-  top: 69%;
+  background-color: blue;
+  top: 67%;
   position: absolute;
   left: 20%;
+  width: 100px;
+  height: 110px;
+}
+
+.cursormarker2 {
+  cursor: pointer;
+  top: 67%;
+  position: absolute;
+  right: 23%;
+  background-color: gold;
+  width: 100px;
+  height: 110px;
+}
+
+.textbubblelocation1 {
+  top: 58%;
+  position: absolute;
+  left: 29%;
 }
 
 .bubbletext1 { 
@@ -46,8 +65,8 @@
 .textbubblelocation2 {
   cursor: pointer;
   position: absolute;
-  top: 69%;
-  right: 23%;
+  top: 58%;
+  right: 32%;
 }
 
 p, h1 {
