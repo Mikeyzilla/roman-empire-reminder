@@ -10,13 +10,30 @@
 
   <body>
     <main class="SignUpContainer">
-        <div class="SignUpHeader">
-          <h1>Join the Legion!</h1>
+      <div class="TitleThoughts">
+        <p class="SoldierDialogue">It looks like you are not signed up, soldier!</p>
+      </div>
+
+      <form id="signUpForm" class="signUpForm">
+        <label for="RomanID" class="UserNameLabel">Mark thyself in the Scroll of Citizens</label>
+        <p></p>
+        <input type="text" id="RomanID" class="UserNameField" name="username" required />
+        <p></p>
+        <label for="RomanPassword" class="PasswordLabel">Seal your Allegiance with a Code</label>
+        <p></p>
+        <input type="password" id="RomanPassword" class="PasswordField" name="password" required />
+        <p></p>
+        <p class="SubmitTitle">Pledge thy Loyalty</p>
+        <div class="SubmitArea">
+          <div class="SubmitField">SIGNED</div>
+          <button type="submit" id="MoveOnButton" class="SealButton"></button>
         </div>
-        <div class="SignUpBody">
-          <input type="password">
-        </div>
-        <div class="SignUpFooter">
-            
-        </div>
+      </form>
+    </main>
   </body>
+</html>
+
+<!-- It looks like you are not signed up, soldier! -->
+<!-- Join the Legion! -->
+<!-- Very good recruit! Now Augustus requires your password! -->
+<!-- Excellent work! Click the button below and get out of my sight! -->
