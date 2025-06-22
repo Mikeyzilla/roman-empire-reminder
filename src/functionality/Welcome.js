@@ -5,9 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const bubbletext2 = document.getElementById("bubbletext2");
   const nextPageLink = document.getElementById("JourneyEmbarker");
   const leftBubble = document.getElementById("leftBubble");
-  const rightBubble = document.getElementById("leftBubble");
-
-  nextPageLink.style.display = "none";
+  const rightBubble = document.getElementById("rightBubble");
 
   leftSoldier.style.display = "inline-block";
   rightSoldier.style.display = "inline-block";
@@ -21,12 +19,19 @@ document.addEventListener("DOMContentLoaded", () => {
     } else if (pointInConversation === 2) {
       bubbletext1.textContent = "Oh yeah? Well what are we waiting for? Let's sign up!";
       pointInConversation = 3;
+
+      setTimeout(() => {
+        leftBubble.style.display = "none";
+        rightBubble.style.display = "none";
+        nextPageLink.textContent = "Enlist Now!";
+      }, 2000); 
     }
   });
 
   leftSoldier.addEventListener("mouseleave", () => {
-    bubbletext1.textContent = "";
-    leftBubble.style.backgroundImage = "";
+    if (pointInConversation < 3) {
+      bubbletext1.textContent = "";
+    }
   });
 
   rightSoldier.addEventListener("mouseenter", () => {
@@ -37,9 +42,9 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   rightSoldier.addEventListener("mouseleave", () => {
-    bubbletext2.textContent = "";
-    rightBubble.style.backgroundImage = "";
+    if (pointInConversation < 3) {
+      bubbletext2.textContent = "";
+    }
   });
-
-
 });
+

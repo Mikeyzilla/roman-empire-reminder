@@ -71,6 +71,9 @@
   font-weight: bold;
   color: gold;
   font-size: 64px;
+  top: 42%;
+  left: 37%;
+  position: absolute;
 }
 
 .textbubblelocation2 {
