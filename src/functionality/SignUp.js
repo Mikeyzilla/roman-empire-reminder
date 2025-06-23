@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
             soldierDialogue.style.width = "165px";
             soldierDialogue.style.fontSize = "15px";
         }
-    }, 100000);
+    }, 5000);
 
     const checkIfSigned = () => {
         if (userNameField.value.length >= 1 && passwordField.value.length >= 1) {
