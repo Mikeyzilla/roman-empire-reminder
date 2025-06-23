@@ -8,4 +8,7 @@ B) Enlist now (For now) does not look great.
 
 C) Need username / password requirements and text below the username / password fields to give help to the user to ensure they're typing in good data. 
 
+D) Need to add a process that decrements the reminder value in the database every day until it reaches 0, so that the next time the user logs in, they see the "You failed your reminder" image on the main page.
+
+
 (Go for B, C, A)
