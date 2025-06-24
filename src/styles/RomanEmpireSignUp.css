@@ -86,3 +86,9 @@
   color: crimson;
 }
 
+.userNameStrengthLabel, .passwordStrengthLabel {
+   width: 300px;
+   font-family: "Gideon Roman", serif;
+   color: red;
+   text-align: center;
+}

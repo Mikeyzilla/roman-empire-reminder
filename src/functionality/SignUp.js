@@ -4,7 +4,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const soldierDialogue = document.getElementById("dialogueBubble");
     const whereSignedIs = document.getElementById("signedArea");
     const stamp = document.getElementById("MoveOnButton");
-
+    const passwordStrengthLabel = document.getElementById("passwordStrengthLabel")
+    const userNameStrengthLabel = document.getElementById("userNameStrengthLabel")
 
     let userInteracted = false;
 
@@ -46,7 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 
-    const handleUsernameInput = () => {
+   const handleUsernameInput = () => {
         if (!userInteracted) {
             userInteracted = true;
             clearTimeout(introTimeout);
@@ -60,8 +61,10 @@ document.addEventListener("DOMContentLoaded", () => {
             soldierDialogue.style.fontSize = "15px";
         }
 
+        strongUserNameChecker();
         checkIfSigned();
     };
+
 
     const handlePasswordInput = () => {
         if (!userInteracted) {
@@ -69,10 +72,47 @@ document.addEventListener("DOMContentLoaded", () => {
             clearTimeout(introTimeout);
         }
 
-        checkIfSigned();
+        if (strongPasswordChecker() == true && strongUserNameChecker() == true) {
+            checkIfSigned();
+        }
+
     };
+
+    const strongUserNameChecker = () => {
+        const userName = userNameField.value;
+        if (userName.length <= 7) {
+            userNameStrengthLabel.textContent = "Your name must be at least 8 characters long!"
+            return false;
+        } else {
+            userNameStrengthLabel.textContent = "That's a great name!"
+            userNameStrengthLabel.style.color = "Green";
+            return true;
+        }
+    }
+
+    const strongPasswordChecker = () => {
+        const password = passwordField.value;
+
+        if (password.length < 9) {
+            passwordStrengthLabel.textContent = "You need a password that contains at least 9 characters";
+            return false;
+        } else if (!/[!@\$,%&*]/.test(password)) {
+            passwordStrengthLabel.textContent = "Your password needs at least one special character (!, @, $, %, &, *)";
+            return false;
+        } else if (!/[A-Z]/.test(password)) {
+            passwordStrengthLabel.textContent = "Your password needs at least one uppercase character";
+            return false;
+        } else {
+            passwordStrengthLabel.textContent = "Your password is stronger than Arnold!";
+            passwordStrengthLabel.style.color = "Green";
+            return true;
+        }
+    };
+
+
 
     userNameField.addEventListener("input", handleUsernameInput);
     passwordField.addEventListener("input", handlePasswordInput);
 });
+
 
