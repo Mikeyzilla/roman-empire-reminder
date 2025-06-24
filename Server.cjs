@@ -28,6 +28,43 @@ app.use(express.json());
         }
     });
 
+   app.post('/register', async (req, res) => {
+        const { username, password } = req.body;
+
+        if (!username || !password) {
+            return res.status(400).json({ error: "Username and password are required." });
+        }
+
+        try {
+            
+            const hashedPassword = await bcrypt.hash(password, 10);
+
+            const insertQuery = `
+                INSERT INTO romanEmpire (userName, password, reminderTime)
+                VALUES (?, ?, ?)
+            `;
+
+            db.run(insertQuery, [username, hashedPassword, 1], function (err) {
+                if (err) {
+                    console.error("Database insertion error:", err.message);
+                    return res.status(500).json({ error: "Failed to register user." });
+                }
+
+                res.status(201).json({
+                    message: "User registered successfully.",
+                    user: {
+                        username,
+                        reminderTime: 1
+                    }
+                });
+            });
+
+        } catch (error) {
+            console.error("Error hashing password:", error.message);
+            res.status(500).json({ error: "Internal server error." });
+        }
+    });
+    
     app.post('/login', (req, res) => {
         const { username, password } = req.body;
 
@@ -82,17 +119,6 @@ app.use(express.json());
             res.clearCookie('connect.sid');
             res.json({ message: "Logged out successfully." });
         });
-    });
-
-
-
-    app.post('/login', (req, res) => {
-        const { username, password } = req.body;
-        try { 
-            const searchQuery = "SELECT * FROM users WHERE username = ? AND password = ?;";
-        } catch (error) {
-
-        }
     });
 
     app.get('/getReminder', (req, res) => {
