@@ -2,7 +2,7 @@ Known Issues so far:
 
 A) We need a signup implementation system. If the user is already signed up (i.e has an account) then when "Enlist now!" is clicked, instead of going to the signup page, they should go to the Main Page.
     -- Right now, I just made it so that the user defaults going to the sign up page (This assumes they do not have an account)
-    -- Needs login implementation.
+    -- Needs frontend implementation of the endpoints.
 
 B) Enlist now (For now) does not look great. 
 
