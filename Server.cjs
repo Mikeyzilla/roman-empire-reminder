@@ -4,6 +4,14 @@ const app = express();
 const PORT = 5000;
 const cors = require('cors');
 const bcrypt = require('bcrypt');
+const session = require('express-session');
+
+app.use(session({
+  secret: 'your-secret-key',
+  resave: false,
+  saveUninitialized: false,
+  cookie: { secure: false }
+}));
 
 app.use(cors());
 app.use(express.json());
@@ -20,51 +28,71 @@ app.use(express.json());
         }
     });
 
-    app.post('/register', async (req, res) => {
+    app.post('/login', (req, res) => {
         const { username, password } = req.body;
 
         if (!username || !password) {
             return res.status(400).json({ error: "Username and password are required." });
         }
 
-        try {
-            const hashedPassword = await bcrypt.hash(password, 10);
+        const searchQuery = "SELECT * FROM Roman_Empire WHERE userName = ?";
 
-            const insertQuery = `
-                INSERT INTO Roman_Empire (userName, password, reminderTime)
-                VALUES (?, ?, ?)
-            `;
+        db.get(searchQuery, [username], async (err, user) => {
+            if (err) {
+                console.error("Database error:", err.message);
+                return res.status(500).json({ error: "Internal server error." });
+            }
 
+            if (!user) {
+                return res.status(401).json({ error: "Invalid username or password." });
+            }
 
-            db.run(insertQuery, [username, hashedPassword, 1], function (err) {
-                if (err) {
-                    console.error("Database insertion error:", err.message);
-                    return res.status(500).json({ error: "Failed to register user." });
+            try {
+                const match = await bcrypt.compare(password, user.password);
+                if (match) {
+                    req.session.user = {
+                        username: user.userName,
+                        reminderTime: user.reminderTime
+                    };
+                    return res.json({ message: "Login successful." });
+                } else {
+                    return res.status(401).json({ error: "Invalid username or password." });
                 }
+            } catch (bcryptError) {
+                console.error("Error comparing passwords:", bcryptError);
+                return res.status(500).json({ error: "Internal server error." });
+            }
+        });
+    });
 
-                res.status(201).json({
-                    message: "User registered successfully.",
-                    user: {
-                        username,
-                        reminderTime: 1
-                    }
-                });
-            });
 
-        } catch (error) {
-            console.error("Error hashing password:", error);
-            res.status(500).json({ error: "Internal server error." });
+    app.get('/userSettings', (req, res) => {
+        if (req.session.user) {
+            res.json({ user: req.session.user });
+        } else {
+            res.status(401).json({ error: "Not logged in." });
         }
     });
 
+    app.post('/logout', (req, res) => {
+        req.session.destroy(err => {
+            if (err) {
+            return res.status(500).json({ error: "Logout failed." });
+            }
+            res.clearCookie('connect.sid');
+            res.json({ message: "Logged out successfully." });
+        });
+    });
 
 
 
     app.post('/login', (req, res) => {
         const { username, password } = req.body;
         try { 
-            const searchQuery = ""
+            const searchQuery = "SELECT * FROM users WHERE username = ? AND password = ?;";
+        } catch (error) {
 
+        }
     });
 
     app.get('/getReminder', (req, res) => {
