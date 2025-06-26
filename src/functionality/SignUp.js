@@ -29,15 +29,37 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
-    stamp.addEventListener("click", (e) => {
-        e.preventDefault(); 
+    stamp.addEventListener("click", async (event) => {
+        event.preventDefault(); 
 
         if (userNameField.value.length >= 1 && passwordField.value.length >= 1) {
-            whereSignedIs.textContent = "SIGNED";
 
-            setTimeout(() => {
-                window.location.href = "RomanEmpireMainPage.html";
-            }, 2000);
+            try {
+                const newUserName = userNameField.value;
+                const newPassword = passwordField.value;
+            
+                const response = await fetch('http://localhost:5000/register', { //fetch needs the exact url not relative url
+                    method: 'POST',
+                    credentials: 'include', //needs this for sessions, makes it so that the cookies are being sent enabling server to keep track of log in
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ username: newUserName, password: newPassword }) //we had to change new user name to user name and new password to just password because that's what backend was expecting
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    whereSignedIs.textContent = "SIGNED";
+                    setTimeout(() => {
+                        window.location.href = "RomanEmpireMainPage.html";
+                    }, 2000);
+                } else {
+                    alert('Registration failed: ' + data.message || data.error);
+                }
+            } catch (err) {
+                alert('Error: ' + err.message);
+            }
         } else {
             soldierDialogue.textContent = "Halt! You forgot your name and / or password!";
             soldierDialogue.style.top = "28%";
