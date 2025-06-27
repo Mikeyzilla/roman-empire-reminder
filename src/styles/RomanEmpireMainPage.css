@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family=Gideon+Roman&display=swap');
+
+body {
+    
+    font-family: "Gideon Roman", serif;
+    overflow: hidden;
+    background-image: url("../images/RomanTest7.png");
+    background-size: cover;
+}
+
+.Toolbar {
+
+}
+
+.SettingsIcon {
+    background-image: url("../images/setShield.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 110px;
+    height: 110px;
+    top: 4%;
+    left: 10%;
+    position: absolute;
+    cursor: pointer;
+}
+
+.LogoutButton {
+    background-image: url("../images/LogoutExit.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 110px;
+    height: 110px;
+    top: 4%;
+    left: 85%;
+    position: absolute;
+    cursor: pointer;
+}
+
+.MainBody {
+    display: flex;
+    text-align: center;
+    justify-content: space-evenly;
+    flex-direction: column;
+    align-items: center;
+}
+
+.LeftArrow {
+    background-image: url("../images/RightArrow.png");
+    background-size: cover;
+    cursor: pointer;
+    transform: scaleX(-1);
+    position: absolute;
+    top: 42%;
+    left: 6%;
+    width: 150px;
+    height: 110px;
+}
+
+.RightArrow {
+    background-image: url("../images/RightArrow.png");
+    background-size: cover;
+    cursor: pointer;
+    position: absolute;
+    top: 42%;
+    right: 6%;
+    width: 150px;
+    height: 110px;
+
+}
+
+.ImageTitle {
+    margin-top: 15px;
+    color: gold;
+    margin-bottom: 50px;
+}
+
+.SelectableImage {
+    position: absolute;
+    top: 37%;
+    right: 36%;
+    width: 420px;
+    height: 380px;
+}
+
+.ImageDescription {
+    width: 537px;
+    font-weight: bold;
+    font-size: 16px;
+    position: absolute;
+    left: 33%;
+    top: 86%;
+}

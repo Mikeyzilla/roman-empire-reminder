@@ -14,16 +14,31 @@ document.addEventListener("DOMContentLoaded", () => {
    setTimeout(() => {
       popUpWindow.style.visibility = "visible";
       overlay.style.visibility = "visible";
-   }, 1000); //make it five once page is completely working
+   }, 4000);
    
    submitButton.addEventListener("click", async (event) => {
-       if (processStage === 0) {
+      if (processStage === 0) {
          enteredUserName = inputField.value;
          if (enteredPassword == null) {
             alert("You must enter a username!!");
             return;
          }
-         //maybe add some sort of check to verify that there is a username that exists within our system with the one entered.
+         try {
+            const userNameAttempt = await fetch('http://localhost:5000/getUserName', {
+               method: 'POST',
+               headers: { 'Content-Type': 'application/json' },
+               body: JSON.stringify({ username: enteredUserName })
+            });
+            if (userNameAttempt.ok) {
+               const data = await userNameAttempt.json();
+               alert("Success! We found a username in our system that matches.")
+            } else {
+               const error = await userNameAttempt.json();
+               alert("There wasn't a username in our system with that name."); 
+            }
+         } catch (err) {
+            console.log(err);
+         }
       popUpWindow.style.visibility = "hidden";
       overlay.style.visibility = "hidden"; 
       emperorText.textContent = "Very well. Do you know the secret code?";
@@ -57,12 +72,17 @@ document.addEventListener("DOMContentLoaded", () => {
             });
             const loginResponse = await response.json();
             if (loginResponse.ok) {
-               //hide the modal first, then show the text. 
+               popUpWindow.style.visibility = "hidden";
+               overlay.style.visibility = "hidden"; 
                emperorText.textContent = "Congratulations, I do know you. Welcome in";
-               //Wait a few seconds, then redirect the user to the main page.
+               setTimeout(() => {
+                  window.location.href = "RomanEmpireMainPage.html";
+               }, 4000); 
+            } else {
+               return response.status(400).json({Error: "There was an error with logging in."});
             }
          } catch(err) {
-
+            return response.status(400).json({err});
          }
       }
    });
