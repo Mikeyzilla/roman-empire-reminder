@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const overlay = document.getElementById("overlay");
   const enterDayBox = document.getElementById("enterBox");
   const setDayButton = document.getElementById("setButton");
+  const backHome = document.getElementById("MainLink");
 
   setTimeout(() => {
     thinkDialogue.textContent = "I'm in the perfect place to set a reminder! All I have to do is enter the amount of days I want to set before the next time I log in!";
@@ -16,6 +17,10 @@ document.addEventListener("DOMContentLoaded", () => {
     daysPopUpArea.style.visibility = "visible";
     overlay.style.visibility = "visible";
   }, 8000);
+
+  backHome.addEventListener("click", () => {
+    window.location.href = "RomanEmpireMainPage.html";
+  });
 
   setDayButton.addEventListener("click", async () => {
     const remainingDays = enterDayBox.value;

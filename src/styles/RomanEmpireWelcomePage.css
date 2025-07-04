@@ -67,13 +67,25 @@
 }
 
 .JourneyEmbarker {
-  font-family: "Gideon Roman", serif;
-  font-weight: bold;
-  color: gold;
-  font-size: 64px;
-  top: 42%;
-  left: 37%;
+  background-image: url("../images/Enlist.png");
+  top: 33%;
+  left: 32%;
   position: absolute;
+  background-size: cover;
+  width: 200px;
+  height: 200px;
+  cursor: pointer;
+}
+
+.JourneyContinuer {
+  background-image: url("../images/LoginTransparent.png");
+  top: 33%;
+  left: 52%;
+  position: absolute;
+  background-size: cover;
+  width: 200px;
+  height: 200px;
+  cursor: pointer;
 }
 
 .textbubblelocation2 {

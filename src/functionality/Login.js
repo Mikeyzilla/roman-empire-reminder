@@ -1,5 +1,3 @@
-const { response } = require("express");
-
 document.addEventListener("DOMContentLoaded", () => {
    const popUpWindow = document.getElementById("loginPopup");
    const overlay = document.getElementById("overlay");

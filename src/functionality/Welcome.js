@@ -4,11 +4,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const bubbletext1 = document.getElementById("bubbletext1");
   const bubbletext2 = document.getElementById("bubbletext2");
   const nextPageLink = document.getElementById("JourneyEmbarker");
+  const loginLink = document.getElementById("JourneyContinuer")
   const leftBubble = document.getElementById("leftBubble");
   const rightBubble = document.getElementById("rightBubble");
 
   leftSoldier.style.display = "inline-block";
   rightSoldier.style.display = "inline-block";
+  nextPageLink.style.visibility = "hidden";
+  loginLink.style.visibility = "hidden";
 
   let pointInConversation = 0;
 
@@ -23,7 +26,8 @@ document.addEventListener("DOMContentLoaded", () => {
       setTimeout(() => {
         leftBubble.style.display = "none";
         rightBubble.style.display = "none";
-        nextPageLink.textContent = "Enlist Now!";
+        nextPageLink.style.visibility = "visible";
+        loginLink.style.visibility = "visible";
       }, 2000); 
     }
   });
@@ -45,6 +49,14 @@ document.addEventListener("DOMContentLoaded", () => {
     if (pointInConversation < 3) {
       bubbletext2.textContent = "";
     }
+  });
+
+  nextPageLink.addEventListener("click", () => {
+    window.location.href = "RomanEmpireSignUp.html";
+  });
+
+  loginLink.addEventListener("click", () => {
+    window.location.href = "RomanEmpireLogin.html";
   });
 });
 
