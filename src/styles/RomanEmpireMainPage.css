@@ -8,10 +8,6 @@ body {
     background-size: cover;
 }
 
-.Toolbar {
-
-}
-
 .SettingsIcon {
     background-image: url("../images/setShield.png");
     background-repeat: no-repeat;
@@ -89,4 +85,36 @@ body {
     position: absolute;
     left: 33%;
     top: 86%;
+}
+
+.DefeatedAndForgivenessArea {
+    font-family: "Gideon Roman", serif;
+    visibility: hidden;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.DefeatedAndForgivenessTitle {
+    position: absolute;
+    top: 1%;
+    left: 29%;
+}
+
+.DefeatedThoughts {
+    width: 275px;
+    height: 275px;
+    transform: scaleX(-1);
+    position: absolute;
+    top: 7%;
+    left: 38%;
+    rotate: -25deg;
+}
+
+.DefeatedAndForgivenessText {
+    position: absolute;
+    top: 17%;
+    right: 47%;
+    rotate: -30deg;
+    width: 209px;
 }

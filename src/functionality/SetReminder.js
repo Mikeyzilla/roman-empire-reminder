@@ -10,15 +10,15 @@ document.addEventListener("DOMContentLoaded", () => {
     thinkDialogue.style.top = "24%";
     thinkDialogue.style.right = "26%";
     thinkDialogue.style.fontSize = "17px";
-  }, 1000);
+  }, 4000);
 
   setTimeout(() => {
     daysPopUpArea.style.visibility = "visible";
     overlay.style.visibility = "visible";
-  }, 2000) //this amount of seconds needs to always be greater than the thinkDialogue seconds.
+  }, 8000);
 
   setDayButton.addEventListener("click", async () => {
-    const remainingDays = enterDayBox.textContent();
+    const remainingDays = enterDayBox.value;
     try {
       const setRemainingDaysAttempt = await fetch('http://localhost:5000/setRemainingDays', {
         method: "POST",
@@ -29,8 +29,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (setRemainingDaysAttempt.ok) {
         const setRemainingResponse = await setRemainingDaysAttempt.json();
-        alert("Reminder set successfully for " + remainingDays + " day(s)!");
-        //instead of the alert, update the dialogue using the text in the comments below
+        daysPopUpArea.style.visibility = "hidden";
+        overlay.style.visibility = "hidden";
+        alert("Reminder set successfully for " + remainingDays + " days!");
+        thinkDialogue.textContent = "Perfect! Now that it's set, as long as I log in before that time, I'll keep being reminded about our awesome Empire!";
+        setTimeout(() => {
+          thinkDialogue.textContent = "I can't imagine what'd happen if I missed the reminder though....";
+          thinkDialogue.style.top = "26%";
+          thinkDialogue.style.right = "27%";
+        }, 6000);
       } else {
         alert("Failed to set reminder. Please try again.");
       }
@@ -40,5 +47,3 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-//Perfect! Now that it's set, as long as I log in before that time, I'll keep being reminded about our awesome Empire! 
-//I can't imagine what'd happen if I missed the reminder though....

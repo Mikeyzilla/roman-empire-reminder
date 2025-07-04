@@ -6,13 +6,16 @@ document.addEventListener("DOMContentLoaded", async () => {
     const leftArrow = document.getElementById("LeftArrow");
     const setReminderShield = document.getElementById("settingsShield");
     const logOutButton = document.getElementById("logOutWalkWay");
-
+    const defeatedAndVictoryArea = document.getElementById("DefeatedAndForgivenessArea");
+    const defeatedTitle = document.getElementById("DefeatedAndForgivenessTitle");
+    const defeatedText = document.getElementById("DefeatedAndForgivenessText");
+    const defeatedThoughtBubble = document.getElementById("DefeatedBubble");
 
     try {
         const checkIfActiveAttempt = await fetch('http://localhost:5000/getRemainingDays', {
             method: "GET", 
             credentials: "include"
-        });
+        }); //if need to test without the logic, comment it out and implement a failsafe always fail code
 
         if (checkIfActiveAttempt.ok) {
 
@@ -86,7 +89,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                     }
                 });
             } else {
-                document.body.style.backgroundImage = "images/defeatedRoman.jpg";
+                document.body.style.backgroundImage = 'url("../images/defeatedRoman.jpg")';
                 leftArrow.style.visibility = "hidden";
                 rightArrow.style.visibility = "hidden";
                 logOutButton.style.visibility = "hidden";
@@ -94,36 +97,41 @@ document.addEventListener("DOMContentLoaded", async () => {
                 imageTitle.style.visibility = "hidden";
                 selectableImage.style.visibility = "hidden";
                 imageDescription.style.visibility = "hidden";
-                //now, create some text for the defeated roman, add it to the page, and style it.
-                //(The empire is saddened by your forgetfulness)
-               setTimeout(async () => {
-                        //replace the background image with a new forgiveness image, add forgiveness text
-                        //reset the reminder time to 1 for the user
-                    setTimeout(() => {
-                        //in this timeout, first remove the forgiveness text, 
-                        //then change that forgiveness background back to normal  
+                defeatedAndVictoryArea.style.visibility = "visible";
+
+                setTimeout(() => {
+                    document.body.style.backgroundImage = 'url("../images/RomanForgive.png")';
+                    defeatedTitle.textContent = "Don't worry! You are forgiven.";
+                    defeatedText.textContent = "Mike and Marcel being glad you came back to their app";
+                    defeatedThoughtBubble.style.transform = "scaleX(1)";
+                    defeatedThoughtBubble.style.rotate = "0deg";
+                    defeatedThoughtBubble.style.left = "59%";
+                    defeatedTitle.style.top = "-2%";
+                    defeatedTitle.style.left = "30%";
+                    defeatedTitle.style.fontSize = "47px";
+                    defeatedText.style.fontSize = "21px";
+                    defeatedText.style.right = "25%";
+                    defeatedText.style.top = "15%"
+                    defeatedText.style.rotate = "0deg";
+                    setTimeout(() => {  
+                        defeatedAndVictoryArea.style.visibility = "hidden";
+                        defeatedTitle.style.visibility = "hidden";
+                        defeatedText.style.visibility = "hidden";
+                        defeatedThoughtBubble.style.visibility = "hidden";
+                        leftArrow.style.visibility = "visible";
+                        rightArrow.style.visibility = "visible";
+                        logOutButton.style.visibility = "visible";
+                        setReminderShield.style.visibility = "visible";
+                        imageTitle.style.visibility = "visible";
+                        selectableImage.style.visibility = "visible";
+                        imageDescription.style.visibility = "visible";
+                        document.body.style.backgroundImage = 'url("../images/RomanTest7.png")';
                         setReminderShield.addEventListener("click", () => {
                             window.location.href = "RomanEmpireSetReminder.html";
                         });
 
-                        logOutButton.addEventListener("click", async () => {
-                            try {
-                                const logOutAttempt = await fetch('http://localhost:5000/logout', {
-                                    method: "POST",
-                                    credentials: "include", 
-                                });
-
-                                const logOutResponse = await logOutAttempt.json();
-
-                                if (logOutResponse) {
-                                    window.location.href = "index.html";
-                                } else {
-                                    alert("There was an error logging out.")
-                                }
-                            } catch (err) {
-                                console.log(err);
-                                alert(err);
-                            }
+                        logOutButton.addEventListener("click", () => {
+                            window.location.href = "index.html";
                         });
 
                         leftArrow.addEventListener("click", () => {
@@ -167,8 +175,9 @@ document.addEventListener("DOMContentLoaded", async () => {
                                 selectableImage.dataset.current = "TransparentAugust";
                             }
                         });
-                    }, 2000); //restoring the UI runs two seconds after
-                }, 2000); //the forgiveness message is displayed
+
+                    }, 7000); 
+                }, 7000); 
             }
         }
     } catch(err) {

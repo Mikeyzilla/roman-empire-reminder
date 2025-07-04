@@ -9,12 +9,8 @@ A) Need to add a link next to Enlist Now! for users who already have an account,
 B) Enlist now (For now) does not look great. 
     -- For now, I've changed it so that it goes directly to Set Reminder so I can design that page easier.
 
-C) Need a button to go from Set Reminder back to the main page.
+C) Style the Go Back Home button in Set Reminder better.
 
 D) Need to update the login route to account for reminderSetAt.
 
-E) In DisplayRomanEmpire, need to implement the rest of the logic following the defeated roman appearing.
-
-F) In set reminder, update text instead of an alert.
-
-G) Make sure enlist now goes directly to sign up when all of the above is done.
+E) Make sure enlist now goes directly to sign up when all of the above is done.
