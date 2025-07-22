@@ -24,11 +24,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
   setDayButton.addEventListener("click", async () => {
     const remainingDays = enterDayBox.value;
+
+    const token = localStorage.getItem("romanEmpireToken");
+
+    if (!token) {
+      alert("You're not logged in!");
+      window.location.href = "index.html";
+      return;
+    }
+
     try {
-      const setRemainingDaysAttempt = await fetch('http://localhost:5000/setRemainingDays', {
+      const setRemainingDaysAttempt = await fetch("http://localhost:5000/setRemainingDays", {
         method: "POST",
-        credentials: "include",
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}` 
+        },
         body: JSON.stringify({ numberOfDays: remainingDays })
       });
 
@@ -44,11 +55,19 @@ document.addEventListener("DOMContentLoaded", () => {
           thinkDialogue.style.right = "27%";
         }, 6000);
       } else {
-        alert("Failed to set reminder. Please try again.");
+        if (setRemainingDaysAttempt.status === 401) {
+          alert("Session expired. Please log in again.");
+          localStorage.removeItem("romanEmpireToken");
+          window.location.href = "index.html";
+        } else {
+          alert("Failed to set reminder. Please try again.");
+        }
       }
     } catch (err) {
-      console.log(err);
+      console.error("Network error:", err);
+      alert("Network error—please try again.");
     }
   });
 });
+
 

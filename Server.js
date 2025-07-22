@@ -2,178 +2,130 @@ import express from 'express';
 import sqlite3Module from 'sqlite3';
 import cors from 'cors';
 import bcrypt from 'bcrypt';
-import session from 'express-session';
+import jwt from 'jsonwebtoken';
+import { promisify } from 'util';
 
 const sqlite3 = sqlite3Module.verbose();
-
 const app = express();
 const PORT = 5000;
 
+
+const dbGet = promisify(db.get).bind(db);
+const dbRun = promisify(db.run).bind(db);
+
 app.use(cors({
-  origin: (origin, callback) => {
-    console.log('Origin attempting to access:', origin); // helpful debug to find out where frontend is running
-    callback(null, true);  // allow all origins during dev (don't know where our frontend is running right now)
-  },
-  credentials: true
+  origin: 'http://127.0.0.1:1430',
 }));
 
 app.use(express.json());
 
-app.use(session({
-  secret: 'mikesecret',
-  resave: false,
-  saveUninitialized: false,
-  cookie: { secure: false }
-}));
+function authenticateJWT(req, res, next) {
+  const authHeader = req.headers.authorization;
+  if (!authHeader) return res.status(401).json({ error: 'No token provided' });
 
-const db = new sqlite3.Database("C://Users//mikej//Desktop//romanEmpire.db", (err) => {
-  if (err) {
-    console.error('Error connecting to the database:', err.message);
-  } else {
-    console.log('Connected to the SQLite database.');
-  }
-});
+  const token = authHeader.split(' ')[1];
+  jwt.verify(token, JWT_SECRET, (err, user) => {
+    if (err) return res.status(403).json({ error: 'Invalid token' });
+    req.user = user;
+    next();
+  });
+}
 
 app.post('/register', async (req, res) => {
   const { username, password } = req.body;
-
-  if (!username || !password) { 
-    return res.status(400).json({ error: "Username and password are required." });
-  }
+  if (!username || !password)
+    return res.status(400).json({ error: "Username and password required" });
 
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
+    const now = new Date().toISOString();
 
-    const insertQuery = "INSERT into Roman_Empire (userName, password, reminderTime, reminderSetAt) VALUES (?, ?, ?, ?)";
+    await dbRun(
+      "INSERT INTO Roman_Empire (userName, password, reminderTime, reminderSetAt) VALUES (?, ?, ?, ?)",
+      [username, hashedPassword, 1, now]
+    );
 
-    const currentDate = new Date().toISOString();
+    const token = jwt.sign(
+      { username },
+      JWT_SECRET,
+      { expiresIn: "7d" }
+    );
 
-    await db.run(insertQuery, [username, hashedPassword, 1, currentDate]);
-    
-    res.status(201).json({ message: "User registered successfully." });
+    res.status(201).json({ message: "User registered", token });
   } catch (error) {
-    res.status(400).json({ error });
+    console.error(error);
+    res.status(400).json({ error: "Registration failed" });
   }
 });
 
 app.post('/login', (req, res) => {
   const { username, password } = req.body;
+  if (!username || !password) return res.status(400).json({ error: "Username and password required" });
 
-  if (!username || !password) {
-    return res.status(400).json({ error: "Username and password are required." });
-  }
+  db.get("SELECT * FROM Roman_Empire WHERE userName = ?", [username], async (err, user) => {
+    if (err || !user) return res.status(401).json({ error: "Invalid credentials" });
 
-  const searchQuery = "SELECT * FROM Roman_Empire WHERE userName = ?";
+    const match = await bcrypt.compare(password, user.password);
+    if (!match) return res.status(401).json({ error: "Invalid credentials" });
 
-  db.get(searchQuery, [username], async (err, user) => {
-    if (err) {
-      console.error("Database error:", err.message);
-      return res.status(500).json({ error: "Internal server error." });
-    }
+    const now = new Date().toISOString();
+    await dbRun("UPDATE Roman_Empire SET reminderTime = ?, reminderSetAt = ? WHERE userName = ?", [1, now, username]);
 
-    if (!user) {
-      return res.status(401).json({ error: "Invalid username or password." });
-    }
+    const token = jwt.sign({ username: user.userName }, JWT_SECRET, { expiresIn: '1d' });
 
-    try {
-      const match = await bcrypt.compare(password, user.password);
-      if (match) {
-        req.session.user = {
-            username: user.userName,
-            reminderTime: user.reminderTime,
-            reminderSetAt: user.reminderSetAt
-        };
-        const userReminderDays = user.reminderTime;
-        const setTime = user.reminderSetAt;
-        const currentTime = Date.now();
-        const timeSetAtNumber = new Date(setTime).getTime();
-        const timeSinceReminder = currentTime - timeSetAtNumber;
-        const userRemainingDaysAsMilliseconds = userReminderDays * 24 * 60 * 60 * 1000;
-        const remainingTime = userRemainingDaysAsMilliseconds - timeSinceReminder;
-        //then calculate the timer status. if timer <= 0, timer failure.
-        // return res.json({ timerStatus: "timerFailure", remainingDays: 0 });
-        //add what's in res.json above to the res.json below, as a comma separated list.
-        return res.json({ message: "Login successful." });
-      } else {
-        return res.status(401).json({ error: "Invalid username or password." });
-      }
-    } catch (bcryptError) {
-      console.error("Error comparing passwords:", bcryptError);
-      return res.status(500).json({ error: "Internal server error." });
-    }
+    return res.json({ token });
   });
 });
 
-app.post('/logout', (req, res) => {
-  req.session.destroy(err => {
-    if (err) {
-      return res.status(500).json({ message: "Logout failed" });
+app.get('/getRemainingDays', authenticateJWT, async (req, res) => {
+  const username = req.user.username;
+
+  try {
+    const user = await dbGet("SELECT * FROM Roman_Empire WHERE userName = ?", username);
+    if (!user) return res.status(404).json({ error: "User not found" });
+
+    const reminderDays = Number(user.reminderTime);
+    const setTime = new Date(user.reminderSetAt).getTime();
+    const now = Date.now();
+    const msRemaining = reminderDays * 24 * 60 * 60 * 1000 - (now - setTime);
+
+    if (msRemaining <= 0) {
+      return res.json({ timerStatus: "timerFailure", remainingTime: 0 });
+    } else {
+      return res.json({ timerStatus: "timerActive", remainingTime: msRemaining });
     }
-    res.clearCookie('connect.sid');
-    res.status(200).json({ message: "Logged out successfully" });
-  });
+  } catch (error) {
+    return res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+app.post('/setRemainingDays', authenticateJWT, async (req, res) => {
+  let { numberOfDays } = req.body;
+  const username = req.user.username;
+
+  numberOfDays = Number(numberOfDays);
+  if (!numberOfDays || numberOfDays <= 0) return res.status(400).json({ error: "Invalid numberOfDays" });
+
+  try {
+    const now = new Date().toISOString();
+    await dbRun("UPDATE Roman_Empire SET reminderTime = ?, reminderSetAt = ? WHERE userName = ?", [numberOfDays, now, username]);
+    res.json({ message: "Reminder time updated" });
+  } catch (error) {
+    res.status(500).json({ error: "Update failed" });
+  }
 });
 
 app.post('/getUserName', async (req, res) => {
   const { username } = req.body;
-  const searchForName = "SELECT * FROM Roman_Empire WHERE userName = ?";
   try {
-    const foundName = await db.get(searchForName, username);
-    if (foundName) {
-      return res.status(200).json({ message: "That name is in our system." });
-    } else {
-      return res.status(404).json({ error: "Couldn't find a user with that name." });
-    }
+    const found = await dbGet("SELECT * FROM Roman_Empire WHERE userName = ?", username);
+    if (found) res.status(200).json({ message: "Username exists" });
+    else res.status(404).json({ error: "Username not found" });
   } catch (err) {
-    return res.status(500).json({ error: "Database error." });
+    res.status(500).json({ error: "Database error" });
   }
 });
-
 
 app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
-});
-
-app.post('/setRemainingDays', async (req, res) => {
-  const {numberOfDays} = req.body;
-  const sessionUserName = req.session?.user?.username;
-
-  const searchForUserName = "SELECT * FROM Roman_Empire WHERE userName = ?";
-  
-  const UserNameFound = db.get(searchForUserName, sessionUserName);
-  
-  if (!UserNameFound) {
-    return res.status(400).json({error: "Could not find a user with that name."});
-  } else {
-    const updateQuery = ` UPDATE Roman_Empire SET reminderTime = ?, reminderSetAt = ? WHERE userName = ?`; 
-    const reminderSetAtTime = new Date().toISOString(); //this is the exact time the user clicked on the button to set the reminder.
-    await db.run(updateQuery, numberOfDays, reminderSetAtTime, sessionUserName);
-    return res.status(200).json({ message: "Reminder time updated successfully." });
-  }
-    //add error checking
-});
-
-app.get('/getRemainingDays', async (req, res) => {
-  const username = req.session?.user?.username;
-
-  const searchForUser = "SELECT * FROM Roman_Empire WHERE userName = ?";
-
-  const userFindRequest = await db.get(searchForUser, username);
-
-  if (!userFindRequest) {
-      return res.status(404).json({ error: "Could not find that user in our system" });
-  } else {
-    const userReminderDays = userFindRequest.reminderTime; //number of days user originally set as countdown
-    const setTime = userFindRequest.reminderSetAt; //The exact time they set that reminder (when the user clicked submit)
-    const currentTime = Date.now(); //the current date
-    const timeSetAtNumber = new Date(setTime).getTime(); //the reminder start time, but as a number 
-    const timeSinceReminder = currentTime - timeSetAtNumber; //the amount of time that has passed since the reminder set, in milliseconds
-    const userRemainingDaysAsMilliseconds = userReminderDays * 24 * 60 * 60 * 1000; //you now have the number of countdown days the user originally set, but in milliseconds
-    const remainingTime = userRemainingDaysAsMilliseconds - timeSinceReminder; //the amount of time that has passed since the countdown started, but in milliseconds
-    if (remainingTime <= 0) {
-      return res.json({ timerStatus: "timerFailure", remainingTime: 0 });
-    } else {
-      return res.json({timerStatus: "timerActive", remainingTime});
-    } //add more error checking if need be.
-  }
+  console.log(`JWT server running at http://localhost:${PORT}`);
 });

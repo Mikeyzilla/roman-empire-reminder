@@ -33,29 +33,31 @@ document.addEventListener("DOMContentLoaded", () => {
         event.preventDefault(); 
 
         if (userNameField.value.length >= 1 && passwordField.value.length >= 1) {
-
             try {
                 const newUserName = userNameField.value;
                 const newPassword = passwordField.value;
-            
-                const response = await fetch('http://localhost:5000/register', { //fetch needs the exact url not relative url
+
+                const response = await fetch('http://localhost:5000/register', {
                     method: 'POST',
-                    credentials: 'include', //needs this for sessions, makes it so that the cookies are being sent enabling server to keep track of log in
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ username: newUserName, password: newPassword }) //we had to change new user name to user name and new password to just password because that's what backend was expecting
+                    body: JSON.stringify({ username: newUserName, password: newPassword })
                 });
 
                 const data = await response.json();
 
                 if (response.ok) {
+                  
+                    localStorage.setItem("romanEmpireToken", data.token);
+
                     whereSignedIs.textContent = "SIGNED";
                     setTimeout(() => {
+                       
                         window.location.href = "RomanEmpireMainPage.html";
                     }, 2000);
                 } else {
-                    alert('Registration failed: ' + data.message || data.error);
+                    alert('Registration failed: ' + (data.message || data.error));
                 }
             } catch (err) {
                 alert('Error: ' + err.message);
@@ -67,6 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
             soldierDialogue.style.width = "200px";
         }
     });
+
 
 
    const handleUsernameInput = () => {

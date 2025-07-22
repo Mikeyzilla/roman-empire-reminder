@@ -12,15 +12,24 @@ document.addEventListener("DOMContentLoaded", async () => {
     const defeatedThoughtBubble = document.getElementById("DefeatedBubble");
 
     try {
-        const checkIfActiveAttempt = await fetch('http://localhost:5000/getRemainingDays', {
-            method: "GET", 
-            credentials: "include"
-        }); //if need to test without the logic, comment it out and implement a failsafe always fail code
+      const token = localStorage.getItem("romanEmpireToken");
+        if (!token) {
+            alert("You are not logged in!");
+            window.location.href = "index.html";
+            return;
+        }
 
+        const checkIfActiveAttempt = await fetch("http://localhost:5000/getRemainingDays", {
+            method: "GET",
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        });
+        
         if (checkIfActiveAttempt.ok) {
 
             const checkIfActiveResponse = await checkIfActiveAttempt.json();
-
+        
             if (checkIfActiveResponse.timerStatus === "timerActive") {
 
                 setReminderShield.addEventListener("click", () => {
@@ -29,22 +38,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 
                 logOutButton.addEventListener("click", async () => {
                     try {
-                        const logOutAttempt = await fetch('http://localhost:5000/logout', {
-                            method: "POST",
-                            credentials: "include", 
-                        });
-
-                        const logOutResponse = await logOutAttempt.json();
-
-                        if (logOutResponse) {
-                            window.location.href = "index.html";
-                        } else {
-                            alert("There was an error logging out.")
+                        localStorage.removeItem("romanEmpireToken");
+                        window.location.href = "index.html";
+                        } catch (err) {
+                            console.log(err);
+                            alert(err);
                         }
-                    } catch (err) {
-                        console.log(err);
-                        alert(err);
-                    }
                 });
 
                 leftArrow.addEventListener("click", () => {
@@ -131,8 +130,10 @@ document.addEventListener("DOMContentLoaded", async () => {
                         });
 
                         logOutButton.addEventListener("click", () => {
+                            localStorage.removeItem("romanEmpireToken");
                             window.location.href = "index.html";
                         });
+
 
                         leftArrow.addEventListener("click", () => {
                             const current = selectableImage.dataset.current;

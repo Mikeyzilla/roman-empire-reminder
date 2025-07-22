@@ -1,0 +1,3 @@
+This is Mike! This Roman Empire app was designed to be a fun, educational way to remember the Roman Empire. It uses Tauri, SQLite3, and Node. In this app, in order to learn about Json Web tokens, I used AI and tested it to make sure the code worked. The result is that I now know how to use Json Web Tokens in Node in any of my future applications.
+
+In order to run this app, not only will you need to set up a proper SQLite3 DB that matches the fields it expects, but you will also need to connect to that DB in the server as well as provide your own JWT secret code. 
