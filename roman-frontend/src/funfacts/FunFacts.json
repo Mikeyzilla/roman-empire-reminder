@@ -1,0 +1,25 @@
+[{
+    "key": "0",
+    "title": "Marcus my words...",
+    "src": "/images/Aurelius.jpg",
+    "desc": "Did you know Marcus was a man of his word? He taught and practiced Stoicism, which is a philosophy about many things, including being humble and self-disciplined.",
+    "category": "Political_Figures",
+    "weight": 1
+},
+{
+    "key": "1",
+    "title": "A Brawl of a Lifetime",
+    "src": "/images/Colosseum.jpg",
+    "desc": "Did you know that the Colosseum was actually at one point used for naval combat? Romans would flood the Colosseum!",
+    "category": "Military",
+    "weight": 1
+},
+{
+    "key": "2",
+    "title": "Our Calendar DATES back to the Empire",
+    "src": "/images/TransparentAugust.png",
+    "desc": "Did you know that our modern-day calendar was created by the Romans? In fact, months like July and August are named because of Julius Caesar and Augustus!",
+    "category": "Living_Traditions",
+    "weight": 1
+}
+]

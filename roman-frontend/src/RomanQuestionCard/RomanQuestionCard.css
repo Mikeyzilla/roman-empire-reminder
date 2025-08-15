@@ -1,0 +1,61 @@
+.BodyArea {
+  text-align: center;
+  font-size: 15px;
+  font-weight: bold;
+  line-height: 1.2;
+  color: #2a1f0e;
+  position: relative;
+  top: 2%;
+  left: 22%;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.6);
+  white-space: nowrap;   
+}
+
+.BodyImage {
+  width: 200px;
+  height: 200px;
+  position: relative;
+  top: 16%;
+}
+
+.ResponsesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.CardLayout {
+  display: flex;
+  position: relative;
+  background-image: url("../../public/images/RomanCard.png"); 
+  background-repeat: no-repeat;
+  background-size: cover;   
+  background-position: center;
+  padding: 1rem;
+  aspect-ratio: 63 / 88;    
+  margin: 0;
+}
+
+.Descriptor {
+  position: absolute;
+  left: 16%;
+  top: 80%;
+}
+
+.Brand {
+  position: absolute;
+  left: 57%;
+  top: 90%;
+  font-size: 12px;
+}
+
+.Path {
+  position: absolute;          
+  bottom: 3px;                 
+  left: 50%;
+  transform: translateX(-50%);  
+  max-width: 90%;
+  white-space: nowrap;         
+  overflow: hidden;             
+  text-overflow: ellipsis;     
+}

@@ -1,0 +1,105 @@
+@import url('https://fonts.googleapis.com/css2?family=Gideon+Roman&display=swap');
+
+html, body { margin:0; height:100%; }
+
+.QuestionLayout {
+  position: relative;          
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+.BgCol {
+  flex: 1;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+.BgCol.center { flex: 0 0 600px; }
+
+.BgCol.left,
+.BgCol.right {
+  background-image: url("../../../public/images/PersonalityBackground.png");
+}
+.BgCol.center {
+  background-image: url("../../../public/images/PersonalityQuizBackground.png");
+}
+
+.ContentOverlay {
+  position: absolute;
+  inset: 0;                     
+  display: flex;
+  justify-content: center;      
+  align-items: flex-start;      
+  z-index: 1;
+  pointer-events: none;    
+}
+
+.ContentInner {
+  width: min(900px, 100%);      
+  margin-top: 24px;
+  pointer-events: auto;         
+  background-color: brown;     
+}
+
+.ProgressBar {
+  width: 300px; 
+  height: 50px; 
+  background: black; 
+  border-radius: 20px;
+  position: relative;
+  left: 32%;
+}
+
+.ProgressMeasurement { 
+  height: 50px; 
+  background: greenyellow; 
+  border-radius: 20px; 
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    visibility: hidden;
+    z-index: 998;
+}
+
+.ThoughtBubbleConversation {
+  width: clamp(180px, 26vw, 420px);
+  aspect-ratio: 1 / 1;               
+  background-image: url("../../../public/images/EmperorTransparentBubble.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+
+  position: relative;
+  right: -15%;
+  top: -11%;
+
+  display: grid;
+  place-items: center;
+
+  container-type: inline-size;
+}
+
+.Conversation {
+  font-family: "Gideon Roman", serif;
+  padding: 10% 12% 14%;             
+  text-align: center;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+  font-weight: bold;
+  font-size: clamp(12px, 3.5cqw, 20px);
+  position: relative;
+  top: 4%;
+  max-width: 85%;
+}
+

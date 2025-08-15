@@ -1,0 +1,24 @@
+[{
+    "id": 1,
+    "questionName": "Do you like Roman Military, Political Figures, or Living Traditions?",
+    "possibleResponses": [
+        "Roman Military",
+        "Political Figures",
+        "Living Traditions"
+    ],
+    "associatedImage": [
+        "../../../public/images/SoldierCard.png",
+        "../../../public/images/EmperorCard.png",
+        "../../../public/images/ChariotCard.png"
+    ],
+    "associatedDescription": [
+        "Might makes right after all",
+        "History provides valuable insight",
+        "Winning is the only option"
+    ],
+    "associatedPath": [
+        "Path of the Warrior",
+        "Path of the Noble",
+        "Path of the Competitor"
+    ]
+}]
