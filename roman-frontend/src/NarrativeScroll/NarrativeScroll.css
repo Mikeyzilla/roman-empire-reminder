@@ -1,0 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=Almendra:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+.NarrationScroll {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; 
+    width: 510px;  
+    font-family: "Almendra", serif;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.TopOfScroll {
+    background-image: url("../../public/images/WelcomeScrollEnds.png");
+    height: 50vh;
+    width: 100%;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.MiddleScroll {
+    overflow: hidden;
+    margin-top: -150px;
+    transition: height 240ms ease;
+    background-image: url("../../public/images/WelcomeScrollBody.png");
+    background-repeat: repeat-y;
+}
+
+.BottomOfScroll {
+    background-image: url("../../public/images/WelcomeScrollEnds.png");
+    height: 80vh;
+    width: 100%;
+    background-size: contain;
+    margin-top: -124px;
+    background-repeat: no-repeat;
+}
+
+.ScrollContent {
+  width: 280px;              
+  margin: 0 auto;             
+  line-height: 20px;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;  
+  word-break: break-word;
+}

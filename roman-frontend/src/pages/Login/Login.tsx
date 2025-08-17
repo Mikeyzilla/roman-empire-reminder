@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import "./Login.css"
 import { useNavigate } from "react-router-dom";
+import type { LoginStreak } from "../../LoginStreak/LoginStreak";
+
 function Login() {
     type Visibility = 'visible' | 'hidden';
+    const window = 6 * 60 * 60 * 1000;
 
-    const [emperorSpeech, setEmperorSpeech] = useState("I was made aware of your presence. Now, then. What is your name?");
+    const [emperorSpeech, setEmperorSpeech] = useState("I am told you requested audience. State your name, citizen.");
     const [infoLabelText, setInfoLabelText] = useState("Enter your name, citizen!");
     const [processStage, setProcessStage] = useState(0);
     const [enteredUserName, setEnteredUserName] = useState("");
@@ -53,7 +56,7 @@ function Login() {
         
         setPopUpWindowVisibility("hidden");
         setOverlayVisibility("hidden");
-        setEmperorSpeech("Very well. Do you know the secret code?");
+        setEmperorSpeech("Very well. Whisper the secret code.");
 
         setTimeout(() => {
             setInfoLabelText("Enter your secret code below:");
@@ -90,8 +93,21 @@ function Login() {
 
             setPopUpWindowVisibility("hidden");
             setOverlayVisibility("hidden");
-            setEmperorSpeech("Congratulations, I do know you. Welcome in");
-
+            setEmperorSpeech("“Ah — so I do remember you. Proceed");
+            if (localStorage.getItem("UserStreak")) {
+                const userLoginStreak: LoginStreak = JSON.parse(localStorage.getItem("UserStreak")!);
+                userLoginStreak.count++;
+                userLoginStreak.timeStarted = Date.now();
+                userLoginStreak.timeItExpires = userLoginStreak.timeStarted + window;
+                localStorage.setItem("UserStreak", JSON.stringify(userLoginStreak));
+            } else {
+                const userStreak: LoginStreak = {
+                    count: 1,
+                    timeStarted: Date.now(),
+                    timeItExpires: Date.now() + window
+                };
+                localStorage.setItem("UserStreak", JSON.stringify(userStreak));
+            }
             setTimeout(() => {
                 navigate("/roman-empire");
             }, 4000);

@@ -1,0 +1,7 @@
+.UnopenedScroll {
+    background-image: url("../../../public/images/WelcomeScroll.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 80vh;
+    width: 80vw;
+}

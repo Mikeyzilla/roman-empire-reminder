@@ -10,11 +10,15 @@ function DisplayRomanEmpire() {
   const [isTimerActive, setIsTimerActive] = useState<boolean | null>(null);
   const [stage, setStage] = useState<UIStage>("default");
   const [index, setIndex] = useState(0);
+  const funFactFilter = localStorage.getItem("funFactsFilter");
   const navigate = useNavigate();
 
   const facts: FunFacts[] = funfactsJson as FunFacts[];
-  const fun_fact = facts[index];
+  const displayedFacts = funFactFilter
+    ? facts.filter(f => f.category === funFactFilter)
+    : facts;
 
+  const fun_fact = displayedFacts[index % displayedFacts.length];
   const inactivityTimer = useRef<number | null>(null);
 
   const resetInactivityTimer = () => {
@@ -31,8 +35,8 @@ function DisplayRomanEmpire() {
   const showRandomFact = () => {
     setIndex((prevIndex) => {
       let newIndex = prevIndex;
-      while (newIndex === prevIndex && facts.length > 1) {
-        newIndex = Math.floor(Math.random() * facts.length);
+      while (newIndex === prevIndex && displayedFacts.length > 1) {
+        newIndex = Math.floor(Math.random() * displayedFacts.length);
       }
       return newIndex;
     });
@@ -41,7 +45,7 @@ function DisplayRomanEmpire() {
 
   const previousFact = () => {
     setIndex((factIndex) => {
-      if (factIndex <= 0) return facts.length - 1;
+      if (factIndex <= 0) return displayedFacts.length - 1;
       return factIndex - 1;
     });
     resetInactivityTimer();
@@ -49,7 +53,7 @@ function DisplayRomanEmpire() {
 
   const nextFact = () => {
     setIndex((factIndex) => {
-      if (factIndex >= facts.length - 1) return 0;
+      if (factIndex >= displayedFacts.length - 1) return 0;
       return factIndex + 1;
     });
     resetInactivityTimer();
@@ -109,6 +113,10 @@ function DisplayRomanEmpire() {
     navigate("/set-reminder");
   };
 
+  const quizTime = () => {
+    navigate("/personality-quiz");
+  }
+
   const logOut = () => {
     try {
       localStorage.removeItem("romanEmpireToken");
@@ -129,6 +137,7 @@ function DisplayRomanEmpire() {
                 className="SettingsIcon"
                 onClick={isTimerActive ? goToSetReminder : undefined}
               />
+              <div className="PersonalityQuiz" onClick={isTimerActive ? quizTime : undefined }/>
               <div
                 className="LogoutButton"
                 id="logOutWalkWay"
@@ -156,7 +165,7 @@ function DisplayRomanEmpire() {
                 "200px" : "380px",
                 top: fun_fact.title === "Marcus my words..." ?
                 "46%" : fun_fact.title === "A Brawl of a Lifetime" ? 
-                "46$" :
+                "46%" :
                 "37%",
                 right: fun_fact.title === "Marcus my words..." ? "39%" : fun_fact.title === "A Brawl of a Lifetime" ?
                 "39%" : "36%"
