@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Gideon+Roman&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Gideon+Roman&display=swap');
 
 .SignUpContainer {
@@ -10,7 +9,7 @@
 }
 
 .SignUp-Image {
- position: absolute;
+  position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;

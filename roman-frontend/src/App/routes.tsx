@@ -1,6 +1,5 @@
 import type { RouteObject } from "react-router-dom";
 
-import Welcome from "../pages/Welcome/Welcome";
 import Login from "../pages/Login/Login";
 import SetReminder from "../pages/SetReminder/SetReminder";
 import DisplayRomanEmpire from "../pages/DisplayRomanEmpire/DisplayRomanEmpire";
@@ -9,8 +8,7 @@ import PersonalityQuiz from "../pages/PersonalityQuiz/PersonalityQuiz";
 import RPGWelcome from "../pages/Welcome/RPGWelcome";
 
 export const appRoutes: RouteObject[] = [
-  { path: "/", element: <Welcome /> },
-  { path: "/RPGWelcome", element: <RPGWelcome/>},
+  { path: "/", element: <RPGWelcome /> },
   { path: "/signup", element: <RomanEmpireSignUp /> },
   { path: "/login", element: <Login /> },
   { path: "/set-reminder", element: <SetReminder /> },

@@ -154,10 +154,10 @@ export default function RomanEmpireSignUp() {
         <p className="SoldierDialogue" id="dialogueBubble" style={{
            top: 
             soldierDialogue === "It looks like you are not signed up, soldier!"
-            ? "39%"
+            ? "28%"
             : soldierDialogue === "Join the Legion! Give me your name!"
-            ? "32%"
-            : "35%",
+            ? "20%"
+            : "27%",
            width: 
             soldierDialogue === "It looks like you are not signed up, soldier!"
             ? "300px" : "250px",
@@ -179,13 +179,11 @@ export default function RomanEmpireSignUp() {
 
       <form id="signUpForm" className="signUpForm" onSubmit={enlistNow}>
         <label className="UserNameLabel">Mark thyself in the Scroll of Citizens</label>
-        <p></p>
         <input type="text" id="RomanID" className="UserNameField" name="username" value={username}
         onChange={handleUsernameInput} required />
         <p className="userNameStrengthLabel" style={{ color: userNameStrengthColor }}>
           {userNameStrengthMessage}
         </p>
-        <div className="Gap"></div>
         <label className="PasswordLabel">Seal your Allegiance with a Code</label>
         <p></p>
         <input type="password" id="RomanPassword" className="PasswordField" name="password" value={password}
@@ -195,7 +193,6 @@ export default function RomanEmpireSignUp() {
           marginLeft: passwordStrengthMessage === "Your password needs at least one special character (!, @, $, %, &, *)"
           ? "8%" : "0%",
         }}>{passwordStrengthMessage}</p>
-        <div className="GapTwo"></div>
         <p className="SubmitTitle">Pledge thy Loyalty</p>
         <div className="SubmitArea">
           <div className="SubmitField" id="signedArea"></div>

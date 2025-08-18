@@ -22,7 +22,7 @@ function DisplayRomanEmpire() {
   const inactivityTimer = useRef<number | null>(null);
 
   const resetInactivityTimer = () => {
-   
+
     if (inactivityTimer.current) {
       clearTimeout(inactivityTimer.current);
     }
@@ -99,7 +99,7 @@ function DisplayRomanEmpire() {
     };
   }, [isTimerActive]);
 
-  
+
   useEffect(() => {
     if (stage === "default") {
       resetInactivityTimer();
@@ -137,7 +137,7 @@ function DisplayRomanEmpire() {
                 className="SettingsIcon"
                 onClick={isTimerActive ? goToSetReminder : undefined}
               />
-              <div className="PersonalityQuiz" onClick={isTimerActive ? quizTime : undefined }/>
+              <div className="PersonalityQuiz" onClick={isTimerActive ? quizTime : undefined} />
               <div
                 className="LogoutButton"
                 id="logOutWalkWay"
@@ -156,19 +156,20 @@ function DisplayRomanEmpire() {
             </h1>
             <img
               src={fun_fact.src}
-              style={{width: fun_fact.title === "Marcus my words..." ?
-                "320px" : fun_fact.title === "A Brawl of a Lifetime" ?
-                "320px"
-                : "420px",
+              style={{
+                width: fun_fact.title === "Marcus my words..." ?
+                  "320px" : fun_fact.title === "A Brawl of a Lifetime" ?
+                    "320px"
+                    : "420px",
                 height: fun_fact.title === "Marcus my words..." ?
-                "200px" : fun_fact.title === "A Brawl of a Lifetime" ?
-                "200px" : "380px",
+                  "200px" : fun_fact.title === "A Brawl of a Lifetime" ?
+                    "200px" : "380px",
                 top: fun_fact.title === "Marcus my words..." ?
-                "46%" : fun_fact.title === "A Brawl of a Lifetime" ? 
-                "46%" :
-                "37%",
+                  "46%" : fun_fact.title === "A Brawl of a Lifetime" ?
+                    "46%" :
+                    "37%",
                 right: fun_fact.title === "Marcus my words..." ? "39%" : fun_fact.title === "A Brawl of a Lifetime" ?
-                "39%" : "36%"
+                  "39%" : "36%"
               }}
               className="SelectableImage"
               id="SelectableImage"

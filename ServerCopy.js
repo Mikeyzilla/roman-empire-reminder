@@ -12,18 +12,21 @@ const PORT = 5000;
 const dbGet = promisify(db.get).bind(db);
 const dbRun = promisify(db.run).bind(db);
 
-app.use(express.json());
+app.use(express.json({ limit: '16kb' }));
 
 function authenticateJWT(req, res, next) {
-  const authHeader = req.headers.authorization;
-  if (!authHeader) return res.status(401).json({ error: 'No token provided' });
-
-  const token = authHeader.split(' ')[1];
-  jwt.verify(token, JWT_SECRET, (err, user) => {
-    if (err) return res.status(403).json({ error: 'Invalid token' });
-    req.user = user;
-    next();
-  });
+  const auth = req.headers.authorization || '';
+  const [scheme, token] = auth.split(' ');
+  if (scheme !== 'Bearer' || !token) {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+  try {
+    const payload = jwt.verify(token, JWT_SECRET, { algorithms: ['HS256'] });
+    req.user = { username: payload.username };
+    return next();
+  } catch {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
 }
 
 app.post('/register', async (req, res) => {
@@ -32,7 +35,7 @@ app.post('/register', async (req, res) => {
     return res.status(400).json({ error: "Username and password required" });
 
   try {
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await bcrypt.hash(password, 12);
     const now = new Date().toISOString();
 
     await dbRun(
@@ -113,7 +116,7 @@ app.post('/setRemainingDays', authenticateJWT, async (req, res) => {
 app.post('/getUserName', async (req, res) => {
   const { username } = req.body;
   try {
-    const found = await dbGet("SELECT * FROM Roman_Empire WHERE userName = ?", username);
+    const found = await dbGet("SELECT 1 FROM Roman_Empire WHERE userName = ?", [username]);
     if (found) res.status(200).json({ message: "Username exists" });
     else res.status(404).json({ error: "Username not found" });
   } catch (err) {

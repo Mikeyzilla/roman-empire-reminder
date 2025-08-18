@@ -35,8 +35,8 @@ export default function PersonalityQuiz() {
         setShowQuiz(false);
         setConversation("Well done. You have succeeded mighty warrior! Your reward will be newfound knowledge in the hall of fun facts.");
         setTimeout(() => {
-           navigate("/roman-empire");
-        }, 4000)      
+          navigate("/roman-empire");
+        }, 4000)
       }
       return next;
     });

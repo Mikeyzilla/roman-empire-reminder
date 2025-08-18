@@ -19,6 +19,11 @@
     background-repeat: no-repeat;
 }
 
+.TopOfScroll,
+.BottomOfScroll {
+  pointer-events: none;   /* allow clicks to pass through */
+}
+
 .MiddleScroll {
     overflow: hidden;
     margin-top: -150px;

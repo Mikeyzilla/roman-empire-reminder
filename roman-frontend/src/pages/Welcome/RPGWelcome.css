@@ -1,7 +1,92 @@
+.RPGPage {
+  display: grid;
+  grid-template-columns: .8fr 1.4fr .8fr;
+  grid-template-rows: 100vh;   
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;             
+}
+
+.Welcome-LeftSide,
+.Welcome-Center,
+.Welcome-RightSide {
+  height: 100vh;               
+  min-height: 100vh;
+  overflow: hidden;            
+}
+
+.Welcome-Center {
+  position: relative;         
+  background-image: url("/images/NewRomanWelcomeImage.png");
+  background-repeat: no-repeat;
+  background-size: 150% auto;
+  background-position: center;
+}
+
+.Welcome-LeftSide {
+  background-image: url("../../../public/images/LeftRomanSide.jpg");
+  background-repeat: no-repeat;
+  background-size: auto calc(100% + 12vh); 
+  background-position: 100% calc(50% - 6vh); 
+}
+
+.Welcome-RightSide {
+  background-image: url("../../../public/images/RightRomanSide.jpg");
+  background-repeat: no-repeat;
+  background-size: auto calc(100% + 12vh);
+  background-position: 0% calc(50% - 6vh);
+}
+
+/* Scroll + text */
+.NarrativeScrollWithText {
+  position: absolute;         
+  inset: 0;                    
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;        
+}
+
+.UnopenedScroll, 
+.NarrativeScrollWithText {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 .UnopenedScroll {
-    background-image: url("../../../public/images/WelcomeScroll.png");
-    background-repeat: no-repeat;
-    background-size: contain;
-    height: 80vh;
-    width: 80vw;
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  height: 80vh;
+  width: 510px;
+  background-image: url("/images/WelcomeScroll.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+/* Banners */
+.TransitionalBannerContainer {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  left: 20%;
+  top: -2%;
+}
+
+.JourneyEmbarker {
+  background-image: url("../../../public/images/EnlistBanner.png");
+  background-size: cover;
+  width: 200px;
+  height: 358px;
+  cursor: pointer;
+}
+
+.JourneyContinuer {
+  background-image: url("../../../public/images/LoginBanner.png");
+  background-size: cover;
+  width: 200px;
+  height: 358px;
+  cursor: pointer;
 }
