@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=Gideon+Roman&display=swap');
+
 .BodyArea {
   text-align: center;
   font-size: 15px;
@@ -39,23 +41,35 @@
 .Descriptor {
   position: absolute;
   left: 16%;
-  top: 80%;
+  top: 75%;
 }
 
 .Brand {
   position: absolute;
-  left: 57%;
-  top: 90%;
+  left: 58%;
+  top: 87%;
   font-size: 12px;
 }
 
 .Path {
   position: absolute;          
-  bottom: 3px;                 
-  left: 50%;
+  bottom: 11px;                 
+  left: 39%;
   transform: translateX(-50%);  
   max-width: 90%;
   white-space: nowrap;         
   overflow: hidden;             
-  text-overflow: ellipsis;     
+  text-overflow: ellipsis;    
+  font-size: 12px; 
+}
+
+.HiddenButton {
+  cursor: pointer;
+  width: 80px;
+  height: 30px;         
+  border-radius: 20px;   
+  background-color: teal;
+  position: relative;
+  top: 1%;
+  right: 29%;
 }

@@ -64,7 +64,7 @@ function Login() {
         setOverlayVisibility("hidden");
         showRedGlare(true);
         setEmperorSpeech("Guards! Seize them!");
-        setLater(() => navigate("/"), 2000);
+        setLater(() => navigate("/"), 3000);
     };
 
     const RomanLogin = async (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -177,7 +177,11 @@ function Login() {
     return (
         <main className={`LoginContainer ${redGlare ? "angry" : ""}`}>
             <div className="EmperorSpeechBubble">
-                <p className="EmperorSpeech" id="EmperorSpeech">
+                <p className="EmperorSpeech" id="EmperorSpeech" style={
+                    emperorSpeech === "Guards! Seize them!"
+                        ? { top: "40%", left: "10%", fontSize: "42px" }   
+                        : { top: "44%", left: "10%" }
+                }>
                     {emperorSpeech}
                 </p>
             </div>
@@ -203,7 +207,7 @@ function Login() {
                     onTextComplete={() => showAssociatedInput(true)}
                 >
                     {associatedInput && (
-                        <>
+                        <div className="ScrollChildrenArea">
                             <input
                                 type={inputType}
                                 className="enterField"
@@ -218,7 +222,7 @@ function Login() {
                             <button className="nextButton" id="nextButton" onClick={RomanLogin}>
                                 {submitText}
                             </button>
-                        </>
+                        </div>
                     )}
                 </NarrativeScroll>
             )}
