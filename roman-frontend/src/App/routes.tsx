@@ -6,6 +6,7 @@ import RomanEmpireSignUp from "../pages/SignUp/RomanEmpireSignUp";
 import PersonalityQuiz from "../pages/PersonalityQuiz/PersonalityQuiz";
 import RPGWelcome from "../pages/Welcome/RPGWelcome";
 import CarveSetReminder from "../pages/SetReminder/CarveSetReminder";
+import FunFactsShowCase from "../pages/DisplayRomanEmpire/FunFactsShowCase";
 
 export const appRoutes: RouteObject[] = [
   { path: "/", element: <RPGWelcome /> },
@@ -13,5 +14,6 @@ export const appRoutes: RouteObject[] = [
   { path: "/login", element: <Login /> },
   { path: "/set-reminder", element: <CarveSetReminder/> },
   { path: "/roman-empire", element: <DisplayRomanEmpire /> },
+  { path: "/funfactshowcase", element: <FunFactsShowCase /> },
   { path: "/personality-quiz", element: <PersonalityQuiz /> }
 ];

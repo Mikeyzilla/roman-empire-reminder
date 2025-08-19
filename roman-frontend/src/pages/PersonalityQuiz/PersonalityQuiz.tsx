@@ -11,7 +11,7 @@ export default function PersonalityQuiz() {
   const [hideBubble, setHideBubble] = useState(false);
   const [conversation, setConversation] = useState(" Mighty warrior! Your trial before you shall not be a test of might, but one of wits. Answer true to yourself, and the knowledge of Rome shall be fit to your liking. Now then, let us commence shortly!")
   const questions: Questions[] = questionsJson as Questions[];
-  const q = questions[index];
+  const specificQuestion = questions[index];
   const progress = ((index + 1) / questions.length) * 100;
   const navigate = useNavigate();
 
@@ -42,9 +42,9 @@ export default function PersonalityQuiz() {
 
   return (
     <div className="QuestionLayout">
-      <div className="BgCol left" />
-      <div className="BgCol center" />
-      <div className="BgCol right" />
+      <div className="LeftSideOfScreen" />
+      <div className="CenterOfScreen" />
+      <div className="RightSideOfScreen" />
 
       <div className="ContentOverlay">
         {!hideBubble && (
@@ -64,17 +64,17 @@ export default function PersonalityQuiz() {
             </div>
 
             <div className="TitleArea">
-              <h1 className="Title">{q.questionName}</h1>
+              <h1 className="Title">{specificQuestion.questionName}</h1>
             </div>
 
             <div className="ResponsesGrid">
-              {q.possibleResponses.map((resp, i) => (
+              {specificQuestion.possibleResponses.map((resp, i) => (
                 <RomanQuestionCard
-                  key={`${q.questionName}-${i}-${resp}`}
+                  key={`${specificQuestion.questionName}-${i}-${resp}`}
                   response={resp}
-                  image={q.associatedImage[i]}
-                  description={q.associatedDescription[i]}
-                  path={q.associatedPath[i]}
+                  image={specificQuestion.associatedImage[i]}
+                  description={specificQuestion.associatedDescription[i]}
+                  path={specificQuestion.associatedPath[i]}
                   onClick={retrieveUserAnswer}
                 />
               ))}

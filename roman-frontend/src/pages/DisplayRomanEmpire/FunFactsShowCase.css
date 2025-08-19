@@ -1,0 +1,75 @@
+.ShowCasePage {
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr minmax(0, 2fr) 1fr;
+}
+
+.ShowCaseLeft,
+.ShowCaseCenter,
+.ShowCaseRight {
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 100%;
+  height: 100%;
+}
+
+.ShowCaseLeft {
+  background-image: url("../../../public/images/ShowCaseLeft.jpg");
+  background-size: cover;
+}
+.ShowCaseCenter {
+  background-image: url("../../../public/images/ShowCaseBackground.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100% auto;
+}
+
+.Calendar {
+  background-image: url("../../../public/images/Calendar.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 30vw;
+  aspect-ratio: 4 / 1.5;
+  position: relative;
+  top: 65%;
+  left: 45%;
+  cursor: pointer;
+}
+
+.Statue {
+  background-image: url("../../../public/images/Statue.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 30vw;
+  aspect-ratio: 4 / 1.5;
+  position: relative;
+  left: 20%;
+  top: 40%;
+  cursor: pointer;
+}
+
+.ColosseumFigurine {
+  background-image: url("../../../public/images/MiniColosseum.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 30vw;
+  aspect-ratio: 4 / 1.5;
+  position: relative;
+  left: 75%;
+  top: 25%;
+  cursor: pointer;
+}
+
+.ShowCaseRight {
+  background-image: url("../../../public/images/ShowCaseRight.jpg");
+  background-size: cover;
+}
+
+
+.DisplayAreaCalendar {
+  width: 150px;                
+  height: 120px;
+  background: rgba(0,255,255,.35);   
+  border: 2px solid #008;
+  z-index: 20;                 
+}

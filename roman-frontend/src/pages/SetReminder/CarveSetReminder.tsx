@@ -157,8 +157,8 @@ function CarveSetReminder() {
         await res.json();
 
         const postSubmitQueue = [
-          "By Sol’s light and Mercury’s swift feet, your summons is set. Perfect! Now that it's set, as long as I log in before that time, I'll keep being reminded about our awesome Empire!",
-          "I can't imagine what'd happen if I missed the reminder though....",
+          "You get the feeling that as long as you login before the reminder time, you'll be in tip top shape.",
+          "I can't imagine what'd happen if you missed the reminder though....",
         ];
 
         setShowPopup(false);         
