@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react"; // NEW
+import { useEffect, useState } from "react";
 import NarrativeScroll from "../../NarrativeScroll/NarrativeScroll";
 import "./CarveSetReminder.css";
 import { useNavigate } from "react-router-dom";
@@ -14,11 +14,6 @@ function CarveSetReminder() {
   const [showPopup, setShowPopup] = useState(false);
   const [desiredRemainingDays, setDesiredRemainingDays] = useState("");
 
-  // NEW: countdown state
-  const [remainingMs, setRemainingMs] = useState<number | null>(null);
-  const [timerStatus, setTimerStatus] = useState<"idle" | "loading" | "timerActive" | "timerFailure">("idle");
-  const tickRef = useRef<number | null>(null); // interval id
-
   const navigate = useNavigate();
 
   const handleNarrationComplete = () => {
@@ -28,106 +23,13 @@ function CarveSetReminder() {
       return;
     }
     if (doneTalking) {
-      navigate("/roman-empire");
+      navigate("/funfactsshowcase");
       return;
     }
     if (!showPopup) {
       setTimeout(() => setShowPopup(true), 300);
     }
   };
-
-  const formatRemaining = (ms: number) => {
-    const clamped = Math.max(0, ms);
-    const totalSeconds = Math.floor(clamped / 1000);
-    const days = Math.floor(totalSeconds / 86400);
-    const hours = Math.floor((totalSeconds % 86400) / 3600);
-    const minutes = Math.floor((totalSeconds % 3600) / 60);
-    const seconds = totalSeconds % 60;
-    const pad = (n: number) => String(n).padStart(2, "0");
-    return { days, hours: pad(hours), minutes: pad(minutes), seconds: pad(seconds) };
-  };
-
-  useEffect(() => {
-    if (!showPopup) {
-      if (tickRef.current) {
-        clearInterval(tickRef.current);
-        tickRef.current = null;
-      }
-      setRemainingMs(null);
-      setTimerStatus("idle");
-      return;
-    }
-
-    let cancelled = false;
-    const token = localStorage.getItem("romanEmpireToken");
-    if (!token) {
-      navigate("/");
-      return;
-    }
-
-    const fetchRemaining = async () => {
-      try {
-        setTimerStatus("loading");
-        const res = await fetch("http://localhost:5000/getRemainingDays", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        if (res.status === 401) {
-          localStorage.removeItem("romanEmpireToken");
-          navigate("/");
-          return;
-        }
-        if (!res.ok) {
-          setTimerStatus("timerFailure");
-          setRemainingMs(0);
-          return;
-        }
-        const data = await res.json();
-        if (cancelled) return;
-
-        if (data.timerStatus === "timerActive" && typeof data.remainingTime === "number") {
-          setTimerStatus("timerActive");
-          setRemainingMs(data.remainingTime);
-
-          if (tickRef.current) clearInterval(tickRef.current);
-          tickRef.current = window.setInterval(() => {
-            setRemainingMs((prev) => {
-              if (prev == null) return prev;
-              const next = prev - 1000;
-              if (next <= 0) {
-                if (tickRef.current) {
-                  clearInterval(tickRef.current);
-                  tickRef.current = null;
-                }
-                setTimerStatus("timerFailure");
-                return 0;
-              }
-              return next;
-            });
-          }, 1000) as unknown as number;
-        } else {
-          setTimerStatus("timerFailure");
-          setRemainingMs(0);
-        }
-      } catch (e) {
-        setTimerStatus("timerFailure");
-        setRemainingMs(0);
-      }
-    };
-
-    fetchRemaining();
-
-    return () => {
-      cancelled = true;
-      if (tickRef.current) {
-        clearInterval(tickRef.current);
-        tickRef.current = null;
-      }
-    };
-  }, [showPopup, navigate]);
 
   const setDays = async () => {
     const remainingDays = desiredRemainingDays.trim();
@@ -161,7 +63,7 @@ function CarveSetReminder() {
           "I can't imagine what'd happen if you missed the reminder though....",
         ];
 
-        setShowPopup(false);         
+        setShowPopup(false);
         setNarrativeQueue(postSubmitQueue);
         setQueueIndex(0);
         setScrollKey((k) => k + 1);
@@ -178,8 +80,6 @@ function CarveSetReminder() {
       alert("Network error—please try again.");
     }
   };
-
-  const time = remainingMs != null ? formatRemaining(remainingMs) : null;
 
   return (
     <div className="CarvingBackground">
@@ -199,15 +99,6 @@ function CarveSetReminder() {
             setDays();
           }}
         >
-          {/* NEW: Countdown header */}
-          <h1 className="CountdownHeading">
-            {timerStatus === "loading" && "Fetching your remaining time…"}
-            {timerStatus === "timerActive" && time
-              ? `Time until reminder: ${time.days}d ${time.hours}:${time.minutes}:${time.seconds}`
-              : null}
-            {timerStatus === "timerFailure" && "No active reminder (or it has expired)."}
-          </h1>
-
           <div className="fieldRow">
             <label className="CarveLabel" htmlFor="heroName">
               Etch your name here, hero!
@@ -241,4 +132,3 @@ function CarveSetReminder() {
 }
 
 export default CarveSetReminder;
-
