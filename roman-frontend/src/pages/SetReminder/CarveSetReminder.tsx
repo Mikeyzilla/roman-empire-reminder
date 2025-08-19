@@ -1,35 +1,24 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import NarrativeScroll from "../../NarrativeScroll/NarrativeScroll";
 import "./CarveSetReminder.css";
 import { useNavigate } from "react-router-dom";
 
+type Stage = "intro" | "form" | "confidentSpeech" | "ominousSpeech";
+
 function CarveSetReminder() {
-  const initialIntro =
+  const introText =
     "As you approach the Roman Monolith, a sudden burst of imagination comes upon you. \n \n You begin to hear thoughts in your head. \n \n They tell you that you have come upon the Mystical Monolith of Memory. \n \n All you have to do is enter the amount of days you want to set before the next time you log in!";
 
-  const [narrativeQueue, setNarrativeQueue] = useState<string[]>([initialIntro]);
-  const [queueIndex, setQueueIndex] = useState(0);
-  const [scrollKey, setScrollKey] = useState(0);
-  const [doneTalking, setDoneTalking] = useState(false);
-  const [showPopup, setShowPopup] = useState(false);
+  const confidentSpeech =
+    "You get the feeling that as long as you login before the reminder time, you'll be in tip top shape.";
+
+  const ominousSpeech =
+    "I can't imagine what'd happen if you missed the reminder though...";
+
+  const [stage, setStage] = useState<Stage>("intro");
   const [desiredRemainingDays, setDesiredRemainingDays] = useState("");
 
   const navigate = useNavigate();
-
-  const handleNarrationComplete = () => {
-    if (queueIndex < narrativeQueue.length - 1) {
-      setQueueIndex((i) => i + 1);
-      setScrollKey((k) => k + 1);
-      return;
-    }
-    if (doneTalking) {
-      navigate("/funfactsshowcase");
-      return;
-    }
-    if (!showPopup) {
-      setTimeout(() => setShowPopup(true), 300);
-    }
-  };
 
   const setDays = async () => {
     const remainingDays = desiredRemainingDays.trim();
@@ -57,17 +46,7 @@ function CarveSetReminder() {
 
       if (res.ok) {
         await res.json();
-
-        const postSubmitQueue = [
-          "You get the feeling that as long as you login before the reminder time, you'll be in tip top shape.",
-          "I can't imagine what'd happen if you missed the reminder though....",
-        ];
-
-        setShowPopup(false);
-        setNarrativeQueue(postSubmitQueue);
-        setQueueIndex(0);
-        setScrollKey((k) => k + 1);
-        setDoneTalking(true);
+        setStage("confidentSpeech");
       } else if (res.status === 401) {
         alert("Session expired. Please log in again.");
         localStorage.removeItem("romanEmpireToken");
@@ -83,15 +62,15 @@ function CarveSetReminder() {
 
   return (
     <div className="CarvingBackground">
-      {!showPopup && (
+      {stage === "intro" && (
         <NarrativeScroll
-          key={scrollKey}
-          narration={narrativeQueue[queueIndex]}
-          onTextComplete={handleNarrationComplete}
+          key="intro"
+          narration={introText}
+          onTextComplete={() => setStage("form")}
         />
       )}
 
-      {showPopup && (
+      {stage === "form" && (
         <form
           className="ReminderForm"
           onSubmit={(e) => {
@@ -126,6 +105,22 @@ function CarveSetReminder() {
             SUBMIT
           </button>
         </form>
+      )}
+
+      {stage === "confidentSpeech" && (
+        <NarrativeScroll
+          key="confidentSpeech"
+          narration={confidentSpeech}
+          onTextComplete={() => setStage("ominousSpeech")}
+        />
+      )}
+
+      {stage === "ominousSpeech" && (
+        <NarrativeScroll
+          key="ominousSpeech"
+          narration={ominousSpeech}
+          onTextComplete={() => navigate("/funfactshowcase")}
+        />
       )}
     </div>
   );
