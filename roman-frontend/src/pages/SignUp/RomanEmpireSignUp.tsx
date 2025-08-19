@@ -87,7 +87,7 @@ export default function RomanEmpireSignUp() {
           setSignedMessage("SIGNED");
 
           setTimeout(() => {
-            navigate("/roman-empire");
+            navigate("/funfactshowcase");
           }, 2000);
         } else {
           alert("Registration failed: " + (data.message || data.error));

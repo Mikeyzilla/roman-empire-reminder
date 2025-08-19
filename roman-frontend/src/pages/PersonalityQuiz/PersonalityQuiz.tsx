@@ -32,7 +32,7 @@ export default function PersonalityQuiz() {
         setHideBubble(false);
         setConversation("Well done. You have succeeded mighty warrior! Your reward will be newfound knowledge in the hall of fun facts.");
         setTimeout(() => {
-          navigate("/roman-empire");
+          navigate("/funfactshowcase");
         }, 4000)
       }
       return next;
