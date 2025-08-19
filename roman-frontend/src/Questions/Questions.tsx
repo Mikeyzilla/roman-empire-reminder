@@ -1,4 +1,5 @@
 export interface Questions {
+    displayText: any;
     id: number,
     questionName: string,
     possibleResponses: string[],

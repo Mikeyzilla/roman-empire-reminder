@@ -4,5 +4,6 @@ export interface FunFacts {
   src: string;        
   desc: string;
   category: string;
+  displayText: string,
   weight: number;
 }

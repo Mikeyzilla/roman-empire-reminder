@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=Gideon+Roman&display=swap');
+
+.CarvingBackground {
+    background-image: url("../../../public/images/CarvedBackground.png");
+    width: 100vw;
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.CarveLabel, .daysLabel {
+    font-family: "Cinzel", serif;
+    color: white;
+    font-size: 40px;
+}
+
+.CyberDial {
+    background-image: url("../../../public/images/CyberDial.png");
+    background-size: contain;
+    width: 400px;
+    height: 400px;
+    background-repeat: no-repeat;
+    position: relative;
+    left: 10%;
+}
+
+.ReminderForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;          
+}
+
+.Gap {
+    width: 1px;
+    height: 40px;
+}
+
+.fieldRow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;          
+}
+
+.textInput, .enterBox {
+  padding: 10px 14px;
+  font-size: 20px;
+  border-radius: 6px;
+  border: 1px solid rgba(255,255,255,0.25);
+  background: rgba(0,0,0,0.35);
+  color: #fff;
+  text-align: center;
+  font-family: "Cinzel", serif;
+  min-width: 240px;      
+}
+
+.setButton {
+  padding: 10px 14px;
+  font-size: 20px;
+  border-radius: 6px;
+  border: 1px solid rgba(255,255,255,0.25);
+  background: transparent;          
+  color: #0ff;                       
+  text-align: center;
+  font-family: "Cinzel", serif;
+  min-width: 240px;
+
+  text-shadow: 0 0 8px #0ff, 0 0 16px #0ff, 0 0 24px #0ff;
+  box-shadow: 0 0 8px rgba(0, 255, 255, 0.6), 0 0 20px rgba(0, 255, 255, 0.4);
+  cursor: pointer;
+  position: relative;
+  top: -30px;
+}
+
+.setButton:focus {
+  outline: none;
+  border-color: #0ff;
+  box-shadow: 0 0 10px #0ff, 0 0 25px #0ff;
+}
+
+.CountdownHeading {
+  font-family: "Cinzel", serif;
+  font-size: 32px;
+  color: #0ff;
+  text-align: center;
+  margin-bottom: 8px;
+  text-shadow: 0 0 8px #0ff, 0 0 16px #0ff, 0 0 24px #0ff; /* mystical glow */
+}

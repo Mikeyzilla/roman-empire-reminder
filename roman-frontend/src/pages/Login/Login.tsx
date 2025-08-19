@@ -137,6 +137,7 @@ function Login() {
                     localStorage.setItem("romanEmpireToken", token);
 
                     setOverlayVisibility("hidden");
+                    setHideScroll(true);
                     setEmperorSpeech("Ah — so I do remember you. Proceed.");
 
 
