@@ -2,62 +2,54 @@
   height: 100vh;
   display: grid;
   grid-template-columns: 1fr minmax(0, 2fr) 1fr;
+  position: relative;
 }
 
-.ShowCaseLeft,
-.ShowCaseCenter,
-.ShowCaseRight {
+.ShowCasePage::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: none center / cover no-repeat;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.ShowCasePage[data-stage="default"]::before   { background-image: none; }
+.ShowCasePage[data-stage="defeated"]::before  { background-image: url("/images/defeatedRoman.jpg"); }
+.ShowCasePage[data-stage="forgiven"]::before  { background-image: url("/images/RomanForgive.png"); }
+
+.ShowCasePage[data-stage="forgiven"]::before  { background-position: center 15%; }
+.ShowCasePage[data-stage="defeated"]::before  { background-position: center 5%; }
+
+.ShowCaseLeft, .ShowCaseCenter, .ShowCaseRight {
   background-repeat: no-repeat;
   background-position: center;
   width: 100%;
   height: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+.ShowCasePage[data-stage="defeated"] .ShowCaseLeft,
+.ShowCasePage[data-stage="defeated"] .ShowCaseCenter,
+.ShowCasePage[data-stage="defeated"] .ShowCaseRight,
+.ShowCasePage[data-stage="forgiven"] .ShowCaseLeft,
+.ShowCasePage[data-stage="forgiven"] .ShowCaseCenter,
+.ShowCasePage[data-stage="forgiven"] .ShowCaseRight {
+  background-image: none !important;
 }
 
 .ShowCaseLeft {
   background-image: url("../../../public/images/ShowCaseLeft.jpg");
   background-size: cover;
 }
+
 .ShowCaseCenter {
+  position: relative;
   background-image: url("../../../public/images/ShowCaseBackground.png");
   background-repeat: no-repeat;
   background-position: center;
   background-size: 100% auto;
-}
-
-.Calendar {
-  background-image: url("../../../public/images/Calendar.png");
-  background-repeat: no-repeat;
-  background-size: contain;
-  width: 30vw;
-  aspect-ratio: 4 / 1.5;
-  position: relative;
-  top: 65%;
-  left: 45%;
-  cursor: pointer;
-}
-
-.Statue {
-  background-image: url("../../../public/images/Statue.png");
-  background-repeat: no-repeat;
-  background-size: contain;
-  width: 30vw;
-  aspect-ratio: 4 / 1.5;
-  position: relative;
-  left: 20%;
-  top: 40%;
-  cursor: pointer;
-}
-
-.ColosseumFigurine {
-  background-image: url("../../../public/images/MiniColosseum.png");
-  background-repeat: no-repeat;
-  background-size: contain;
-  width: 30vw;
-  aspect-ratio: 4 / 1.5;
-  position: relative;
-  left: 75%;
-  top: 25%;
-  cursor: pointer;
 }
 
 .ShowCaseRight {
@@ -65,11 +57,151 @@
   background-size: cover;
 }
 
+.PersonalityButton {
+  background-image: url("../../../public/images/PersonalityQuizButton.png");
+  background-size: contain;
+  width: 100px;
+  height: 100px;
+  cursor: pointer;
+}
+
+.SetReminderShield {
+  background-image: url("../../../public/images/setShield.png");
+  background-size: contain;
+  width: 100px;
+  height: 100px;
+  cursor: pointer;
+}
+
+.LogoutButton {
+  position: absolute;
+  left: 40%;
+}
+.ShowCasePage[data-stage="forgiven"] .LogoutButton {
+  position: fixed;   
+  top: 1rem;
+  right: 2rem;     
+  left: auto;
+  z-index: 1000;
+}
+
+.Calendar, .Marcus, .Colosseum {
+  position: absolute;
+  background-repeat: no-repeat;
+  background-size: contain;
+  aspect-ratio: 1 / 1;
+  cursor: pointer;
+}
+
+.Calendar {
+  background-image: url("../../../public/images/Calendar.png");
+  width: 12vw;
+  top: 65%;
+  left: 50%;
+  z-index: 3;
+}
+
+.Marcus {
+  background-image: url("../../../public/images/Statue.png");
+  width: 12vw;
+  top: 42%;
+  left: 8%;
+  z-index: 2;
+}
+
+.Colosseum {
+  background-image: url("../../../public/images/MiniColosseum.png");
+  width: 14vw;
+  top: 60%;
+  left: 71%;
+  z-index: 1;
+}
 
 .DisplayAreaCalendar {
-  width: 150px;                
-  height: 120px;
-  background: rgba(0,255,255,.35);   
-  border: 2px solid #008;
-  z-index: 20;                 
+  width: 30px;
+  height: 30px;
+  z-index: 20;
+}
+
+.CalendarImage {
+  width: 220px;
+  height: 220px;
+  background-size: contain;
+  z-index: 100;
+  background-repeat: no-repeat;
+  position: relative;
+  left: 25%;
+}
+
+.DefeatedAndForgivenessArea {
+  font-family: "Gideon Roman", serif;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  position: relative;
+  z-index: 5;
+  visibility: visible;
+}
+
+.DefeatedAndForgivenessArea {
+  visibility: hidden;
+  position: relative;
+  font-family: "Gideon Roman", serif;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  z-index: 5;
+}
+.ShowCaseCenter[data-stage="defeated"] .DefeatedAndForgivenessArea,
+.ShowCaseCenter[data-stage="forgiven"] .DefeatedAndForgivenessArea {
+  visibility: visible;
+}
+
+.DefeatedAndForgivenessTitle {
+  position: absolute;
+  margin-top: 40%;
+  left: 0%;
+  z-index: 100;
+  max-width: 300px;
+  color: black;
+}
+
+.ShowCaseCenter[data-stage="forgiven"] .DefeatedAndForgivenessTitle {
+  color: #ffe08a;
+  position: relative;
+  margin-top: 5%;
+  left: 22%;
+}
+
+.DefeatedThoughts {
+  width: 275px;
+  height: 275px;
+  transform: scaleX(-1);
+  position: absolute;
+  top: 7%;
+  left: 18%;
+  rotate: -25deg;
+  z-index: 100;
+}
+
+.ShowCaseCenter[data-stage="forgiven"] .DefeatedThoughts {
+  width: 250px;
+  height: 250px;
+  left: -20%;
+}
+
+.DefeatedAndForgivenessText {
+  position: absolute;
+  margin-top: 12%;
+  right: 52%;
+  rotate: -30deg;
+  width: 209px;
+  z-index: 100;
+  font-size: 20px;
+}
+
+.ShowCaseCenter[data-stage="forgiven"] .DefeatedAndForgivenessText {
+  left: -18%;
+  color: white;
+  margin-top: 10%;
 }

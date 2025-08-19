@@ -160,7 +160,7 @@ function Login() {
                     }
 
                     setLater(() => {
-                        navigate("/roman-empire");
+                        navigate("/funfactshowcase");
                     }, 4000);
                 } else {
 

@@ -12,20 +12,20 @@ html, body { margin:0; height:100%; }
   overflow: hidden;
 }
 
-.BgCol {
+.L {
   flex: 1;
   height: 100%;
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
 }
-.BgCol.center { flex: 0 0 600px; }
+.CenterOfScreen { flex: 0 0 600px; }
 
-.BgCol.left,
-.BgCol.right {
+.LeftSideOfScreen,
+.RightSideOfScreen {
   background-image: url("../../../public/images/PersonalityBackground.png");
 }
-.BgCol.center {
+.CenterOfScreen {
   background-image: url("../../../public/images/PersonalityQuizBackground.png");
 }
 

@@ -42,9 +42,9 @@ export default function PersonalityQuiz() {
 
   return (
     <div className="QuestionLayout">
-      <div className="LeftSideOfScreen" />
-      <div className="CenterOfScreen" />
-      <div className="RightSideOfScreen" />
+      <div className="L LeftSideOfScreen" />
+      <div className="L CenterOfScreen" />
+      <div className="L RightSideOfScreen" />
 
       <div className="ContentOverlay">
         {!hideBubble && (
